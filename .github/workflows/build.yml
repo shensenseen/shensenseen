@@ -16,18 +16,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          pip install pyinstaller pillow
+          pip install pyinstaller pyodbc PySide6
 
       - name: Build EXE
         run: |
-          pyinstaller --onefile كامل.py
+          pyinstaller --noconsole --hidden-import=pyodbc --hidden-import=PySide6 --onefile main.py
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: exe-file
-          path: dist/كامل.exe
+          path: dist/main.exe
