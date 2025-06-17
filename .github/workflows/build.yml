@@ -1,0 +1,33 @@
+name: Build EXE for Windows
+
+on:
+  push:
+    paths:
+      - '**.py'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller pillow
+
+      - name: Build EXE
+        run: |
+          pyinstaller --onefile كامل.py
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v3
+        with:
+          name: exe-file
+          path: dist/كامل.exe
